@@ -5,11 +5,7 @@ const int ledPin = 3;
 
 const int perCycle = 1;
 
-int ledOne = 255;
-int ledTwo = 255;
-int ledThree = 255;
-int ledFour = 255;
-
+int ledBrightness = 255;
 
 Adafruit_NeoPixel led = Adafruit_NeoPixel(4,ledPin,NEO_GRB + NEO_KHZ800);
 
@@ -44,37 +40,28 @@ void loop()
  Serial.println(perCycle);
  currentMillis = millis();
 
- 
-
  if(currentMillis - previousMillis >= cycle){
   
  previousMillis = currentMillis; 
 
 if(dim){
- ledOne = ledOne - perCycle;
- ledTwo = ledTwo - perCycle;
- ledThree = ledThree - perCycle;
- ledFour = ledFour - perCycle;
+ ledBrightness = ledBrightness - perCycle;
 }else if(!dim){
-  ledOne = ledOne + perCycle;
-  ledTwo = ledTwo + perCycle;
-  ledThree = ledThree + perCycle;
-  ledFour = ledFour + perCycle;
+  ledBrightness = ledBrightness + perCycle;
 }
 
-if(dim && ledOne <= 0){
+if(dim && ledBrightness <= 0){
   dim = false;
-}else if(!dim && ledOne >= 255){
+}else if(!dim && ledBrightness >= 255){
   dim = true;
 }
   
- led.setPixelColor(0, ledOne, 0,0);
- led.setPixelColor(1, 0, ledTwo,0);
- led.setPixelColor(2, 0, 0,ledThree);
- led.setPixelColor(3, ledFour/2, 0,ledFour/2);
+ led.setPixelColor(0, ledBrightness, 0,0);
+ led.setPixelColor(1, 0, ledBrightness,0);
+ led.setPixelColor(2, 0, 0,ledBrightness);
+ led.setPixelColor(3, ledBrightness/2, 0,ledBrightness/2);
 
  led.show();
 
-    
 } 
 }
